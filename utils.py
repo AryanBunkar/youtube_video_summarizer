@@ -47,10 +47,11 @@ def get_transcript(video_id: str) -> str:
         proxy_username=proxy_username,
         proxy_password=proxy_password,
     )
-    api = YouTubeTranscriptApi(proxies=proxy_config)
+# AFTER (fixed)
+    api = YouTubeTranscriptApi()
 
     try:
-        transcript_list = api.list(video_id)
+        transcript_list = api.list(video_id, proxies=proxy_config)  # ← proxies goes here
     except TranscriptsDisabled:
         raise RuntimeError("Transcripts are disabled for this video. Try another video.")
     except Exception as exc:
